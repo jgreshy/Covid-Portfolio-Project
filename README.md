@@ -48,4 +48,33 @@ WHERE continent is not null
 GROUP BY continent
 ORDER BY death_rate desc
 
+--  Global death rate
+SELECT SUM(new_cases) AS total_cases, SUM(cast(new_deaths AS INT)) AS total_deaths, SUM(cast(new_deaths AS INT))/SUM(new_cases)*100 AS death_rate
+FROM `winged-record-348816.covid_project.covid-deaths`
+WHERE continent is not null
+
+-- Top 10 countries with the highest death rate
+SELECT location, population, MAX(CAST(total_deaths AS INT)) AS highest_death_count, 
+(MAX(CAST(total_deaths AS INT))/population)*100 AS percent_population_death
+FROM `winged-record-348816.covid_project.covid-deaths`
+WHERE continent IS NOT NULL
+GROUP BY location, population
+ORDER BY 4 DESC
+LIMIT 10
+
+-- Finding the case per population percentage. This is not the percentage of citizens that have tested positive in a country. Instead, this metric can be used to measure the transmission of Covid-19 in countries around the world and would include individuals who contract covid multiple times. Case_percentage should correlate with infection rate (shown below).
+
+SELECT location, AVG(total_cases/population)*100 AS case_percentage
+FROM `winged-record-348816.covid_project.covid-deaths`
+GROUP BY location
+ORDER BY case_percentage desc
+LIMIT 10
+
+SELECT location, population, MAX(total_cases) AS infection_count, AVG(total_cases/population)*100 AS case_percentage,
+(MAX(total_cases)/population)*100 AS percent_population_infected
+FROM `winged-record-348816.covid_project.covid-deaths`
+WHERE continent IS NOT NULL
+GROUP BY location, population
+ORDER BY 5 DESC
+
 -- 
