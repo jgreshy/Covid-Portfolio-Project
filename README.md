@@ -47,3 +47,5 @@ FROM `winged-record-348816.covid_project.covid-deaths`
 WHERE continent is not null
 GROUP BY continent
 ORDER BY death_rate desc
+
+-- 
