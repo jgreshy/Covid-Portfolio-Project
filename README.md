@@ -77,4 +77,21 @@ WHERE continent IS NOT NULL
 GROUP BY location, population
 ORDER BY 5 DESC
 
--- 
+-- Joining Covid-deaths and Covid_vaccinations
+SELECT *
+FROM `winged-record-348816.covid_project.covid-deaths` dea
+JOIN winged-record-348816.covid_project.covid_vaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+  
+-- Shows countries with the largest fully-vaccinated populations (assuming the average fully-vaccinated individual receives two shots)
+SELECT dea.location, SUM(vac.new_vaccinations) AS total_vaccinations, ((SUM(vac.new_vaccinations)/2)/MAX(dea.population)*100) AS percent_toward_full
+FROM `winged-record-348816.covid_project.covid-deaths` dea
+JOIN winged-record-348816.covid_project.covid_vaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+  WHERE dea.continent IS NOT NULL AND vac.new_vaccinations IS NOT NULL
+  GROUP BY dea.location
+  ORDER BY 3 desc
+  
+  --
