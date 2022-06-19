@@ -94,4 +94,30 @@ JOIN winged-record-348816.covid_project.covid_vaccinations vac
   GROUP BY dea.location
   ORDER BY 3 desc
   
-  --
+-- Shows a rolling count of vaccines administered 
+  SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, 
+SUM(vac.new_vaccinations) OVER (PARTITION BY dea.location
+ORDER by dea.location, dea.date) AS rolling_count_vaccinations
+FROM `winged-record-348816.covid_project.covid-deaths` dea
+JOIN winged-record-348816.covid_project.covid_vaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL AND vac.new_vaccinations IS NOT NULL
+ORDER BY 2,3
+
+-- Using CTE
+WITH pop_vs_vac AS
+(
+SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinations, 
+SUM(vac.new_vaccinations) OVER (PARTITION BY dea.location ORDER by dea.location, 
+dea.date) AS rolling_count_vaccinations
+FROM `winged-record-348816.covid_project.covid-deaths` dea
+JOIN winged-record-348816.covid_project.covid_vaccinations vac
+	ON dea.location = vac.location
+	AND dea.date = vac.date
+WHERE dea.continent IS NOT NULL AND vac.new_vaccinations IS NOT NULL
+)
+SELECT *, (rolling_count_vaccinations/population)*100 AS rolling_count_vac_percent
+FROM pop_vs_vac
+
+-- 
