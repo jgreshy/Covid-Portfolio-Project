@@ -5,3 +5,5 @@
 -- The focus of this project was to analyze the relationship between covid deaths and covid vaccinations as they were first introduced
 ## Data Structure
 -- The data was configured in a way that created countries for each continent. These "countries" consolidated all data of all countried within the continent into reoccord. This happened because these "countries" continent attached to their record. Because of this, we'll be using 'WHERE continent IS NOT NULL' to exclude this repetitive data that would skew our results.
+
+[View Code Here[(
