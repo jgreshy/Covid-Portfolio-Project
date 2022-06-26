@@ -1,8 +1,13 @@
 # covid
 
--- This is a test to see if it saves
--- The data was configured in a way that countries called Asia and Europe were formed (for each continent). The "countries" consolidated all of the data for each country within the continent into one. For these "countries" the continent was Null. We'll be using WHERE continent IS NOT NULL to exclude this data that could skew our results.
+## Project Overview:
+-- The data used in this project was collected from January 2020 to April 2021. The data comes from the World Health Organization and originally downloaded as two separate tables, one containing data about covid deaths and another containing data on covid vaccinations.
+-- The focus of this project was to analyze the relationship between covid deaths and covid vaccinations as they were first introduced
+## Data Structure
+-- The data was configured in a way that created countries for each continent. These "countries" consolidated all data of all countried within the continent into reoccord. This happened because these "countries" continent attached to their record. Because of this, we'll be using 'WHERE continent IS NOT NULL' to exclude this repetitive data that would skew our results.
 
+
+-- Begin by bringing in the two tables we will be using
 SELECT *
 FROM `winged-record-348816.covid_project.covid-deaths`
 WHERE continent IS NOT NULL
