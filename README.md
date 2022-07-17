@@ -1,4 +1,4 @@
-# Covid Portfolio Project
+# World Health Organization: Covid Deaths and Vaccinations
 
 ## [View Queries Here](https://github.com/jgreshy/Covid-Portfolio-Project/blob/main/queries)
 
