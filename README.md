@@ -8,7 +8,7 @@
 
 Includes :
 - JOINS
-- ORDER/PARTITION
+- OVER/PARTITION
 - CTE
 - Calculating additional statistic for Tableau
 
